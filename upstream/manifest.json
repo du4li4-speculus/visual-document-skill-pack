@@ -1,0 +1,24 @@
+{
+  "pack": "visual-document-skill-pack",
+  "version": "0.1.0",
+  "upstreams": [
+    {
+      "name": "kami",
+      "repository": "https://github.com/tw93/Kami",
+      "strategy": "keep upstream separate; install from official project/package when supported"
+    },
+    {
+      "name": "diagram-maker",
+      "repository": "https://github.com/c0ng-web/codex-skill",
+      "path": "skills/diagram-maker",
+      "strategy": "keep upstream separate; copy/install the skill directory when supported"
+    }
+  ],
+  "external_apps": [
+    {
+      "name": "Gamma",
+      "role": "optional alternate document/presentation/web production route",
+      "vendored": false
+    }
+  ]
+}
