@@ -1,47 +1,146 @@
 ---
 name: visual-router
-description: Route professional PDF, HTML, report, white paper, one-pager, diagram, architecture, flow, and visual-document tasks across Kami, diagram-maker, host image generation, and Gamma.
+description: Route visual-document tasks by first classifying inputs, deciding whether compression is needed, and selecting the smallest production workflow across document-compression, Kami, diagram-maker, host image generation, and Gamma.
 ---
 
-# Visual Router
+# Visual Router v0.2
 
-Use this skill as an orchestration layer. It does not replace upstream design skills.
+Use this skill as the top-level visual document orchestration layer.
 
-## Core rule
+It manages both:
 
-Choose the smallest visual stack that can satisfy the deliverable. Avoid decorative complexity.
+1. Visual input routing.
+2. Visual output production routing.
 
-## Routing
+It does not replace specialized skills.
 
-### Professional PDF / HTML document
-Use **Kami** for professional reports, PDFs, white papers, one-pagers, memos, portfolios, polished HTML, and typography-led deliverables. Kami owns hierarchy, typography, composition, spacing, production, and final visual QA.
+## Core Rule
 
-### Diagram or architecture
-Use **diagram-maker** for software architecture, system topology, process flow, product workflow, capability models, concept maps, lifecycles, swimlanes, and editable whiteboards.
+Choose the smallest workflow that satisfies the task.
 
-Prefer `architecture-svg` for software/cloud/infra, `clean-svg` for polished concepts/processes, and `excalidraw` when editability matters.
+Do not process every visual input deeply. Do not invoke every visual tool.
 
-### Combined report + diagram
-1. Extract the claim each diagram must communicate.
-2. Use diagram-maker to create it.
-3. Verify labels, arrows, hierarchy, and density.
-4. Embed the finished asset into the Kami document.
-5. Let Kami control final page composition and caption treatment.
+---
 
-### Images
-Use host-native image generation only when an image materially improves the deliverable: cover hero, editorial illustration, concept illustration, or section visual. Default to a low image count. Prefer typography, diagrams, tables, and whitespace over generic AI imagery.
+# Stage 1: Input Triage
 
-### Gamma
-Use Gamma as an alternative route for card-based visual storytelling, dynamic web-style documents, rapid presentation generation, or when the user explicitly wants a distinct style from Kami. Gamma is an external app, not vendored into this repository.
+Before production decisions, inspect the input.
 
-## Style decision
+## Large or reusable visual input
 
-Prefer Kami for serious, editorial, information-dense, report-like, PDF-first artifacts. Prefer Gamma for presentation-forward, card-based, visually dynamic, browser-first, collaboratively editable artifacts.
+Route to **document-compression** first when:
 
-## Anti-patterns
+- More than 5 images are provided.
+- PDF exceeds roughly 10 pages.
+- Pages/slides contain mixed text, images, charts, or tables.
+- User requests comparison, database creation, tracking, or repeated analysis.
+- The same source is referenced multiple times.
 
-Avoid using every tool on every task; generic AI-tech imagery; unnecessary gradients/glows; unreadably dense diagrams; letting image generation substitute for information design; or mixing unrelated visual systems in one artifact.
+Purpose:
 
-## QA contract
+`raw visual input → structured context → targeted analysis`
 
-Before delivery verify hierarchy, overflow/clipping, diagram readability at final size, consistent visual density, justified image usage, insight-led captions, and correct PDF/HTML output format.
+## Small visual input
+
+Do not compress when:
+
+- Single screenshot.
+- One-page document.
+- Quick inspection.
+
+Use direct visual reasoning.
+
+---
+
+# Stage 2: Production Routing
+
+After input is understood, choose output workflow.
+
+## Professional PDF / HTML document
+
+Use **Kami** for:
+
+- reports
+- white papers
+- one-pagers
+- portfolios
+- polished HTML
+- typography-led documents
+
+Kami owns hierarchy, typography, composition, spacing, production, and final visual QA.
+
+## Diagram or architecture
+
+Use **diagram-maker** for:
+
+- software architecture
+- system topology
+- process flow
+- product workflow
+- capability models
+- concept maps
+- lifecycles
+- editable whiteboards
+
+Prefer:
+
+- architecture-svg for systems.
+- clean-svg for polished concepts/processes.
+- excalidraw when editability matters.
+
+## Combined report + diagram
+
+Workflow:
+
+1. Extract the message the diagram must communicate.
+2. Create the diagram with diagram-maker.
+3. Verify hierarchy, labels, arrows, and density.
+4. Embed into Kami.
+5. Let Kami control final composition.
+
+## Images
+
+Use host-native image generation only when images materially improve the artifact:
+
+- cover hero
+- editorial illustration
+- concept illustration
+- section visual
+
+Prefer information design over decorative images.
+
+## Gamma
+
+Use Gamma for:
+
+- card-based storytelling
+- dynamic web-style documents
+- rapid presentation generation
+- explicit request for Gamma style
+
+Gamma remains external.
+
+---
+
+# Stage 3: QA Contract
+
+Before delivery verify:
+
+- information hierarchy
+- visual density
+- overflow/clipping
+- diagram readability
+- image necessity
+- PDF/HTML correctness
+
+---
+
+# Anti-patterns
+
+Avoid:
+
+- sending large document collections directly into vision models
+- using OCR/compression when unnecessary
+- using image generation instead of information design
+- forcing every artifact through the same visual style
+- combining unrelated visual systems
