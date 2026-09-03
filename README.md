@@ -1,22 +1,24 @@
 # Visual Document Skill Pack
 
-A thin orchestration pack for producing professional, visually distinctive PDF/HTML deliverables.
+A thin orchestration pack for producing professional, visually distinctive PDF/HTML deliverables and managing visual document inputs efficiently.
 
 ## Architecture
 
 1. **visual-router** — decides which visual workflow to use.
-2. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
-3. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
-4. **Host image generation** — optional, for a small number of photos/illustrations.
-5. **Gamma** — optional external app for an alternative visual language, especially presentation/web-card output.
+2. **document-compression** — reduces vision token usage by converting PDFs/images/Pages into structured reusable context.
+3. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
+4. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
+5. **Host image generation** — optional, for a small number of photos/illustrations.
+6. **Gamma** — optional external app for an alternative visual language, especially presentation/web-card output.
 
 ## Design principle
 
-Do not merge upstream skills into one monolith. Keep Kami and diagram-maker independently updateable, and let `visual-router` coordinate them.
+Do not merge upstream skills into one monolith. Keep each capability independently updateable, and let routing layers coordinate workflows.
 
 ## Repository layout
 
 - `skills/visual-router/SKILL.md` — orchestration rules.
+- `skills/document-compression/SKILL.md` — document/image compression workflow.
 - `upstream/manifest.json` — upstream sources and intended install strategy.
 - `upstream/README.md` — update policy.
 - `scripts/bootstrap.sh` — helper for cloning/updating upstream skills locally.
@@ -24,6 +26,7 @@ Do not merge upstream skills into one monolith. Keep Kami and diagram-maker inde
 
 ## Recommended routing
 
+- Large PDF/image/Page collections → **document-compression first**
 - Professional PDF / report / one-pager / white paper / polished HTML → **Kami**
 - Architecture / workflow / capability model / system diagram → **diagram-maker**
 - Report contains diagrams → **diagram-maker first**, then embed into **Kami**
