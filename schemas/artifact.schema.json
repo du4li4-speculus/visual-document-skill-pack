@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Artifact",
+  "description": "Reusable asset generated from document and visual workflows",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string"},
+    "source": {"type": "string"},
+    "type": {"enum": ["pdf", "image", "pages", "slides", "text"]},
+    "project": {"type": "string"},
+    "processing": {
+      "type": "object",
+      "properties": {
+        "method": {"type": "string"},
+        "confidence": {"type": "number"}
+      }
+    },
+    "assets": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["id", "source", "type"]
+}
