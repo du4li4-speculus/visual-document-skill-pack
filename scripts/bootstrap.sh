@@ -1,22 +1,28 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VENDOR="$ROOT/.upstream"
-mkdir -p "$VENDOR"
+REPO="https://github.com/du4li4-speculus/visual-document-skill-pack.git"
+TARGET="${HOME}/.codex/skills/visual-document-skill-pack"
 
-if [ ! -d "$VENDOR/Kami/.git" ]; then
-  git clone https://github.com/tw93/Kami.git "$VENDOR/Kami"
+ echo "Installing visual-document-skill-pack..."
+
+if [ -d "$TARGET/.git" ]; then
+  echo "Existing installation found. Updating..."
+  git -C "$TARGET" pull --ff-only
 else
-  git -C "$VENDOR/Kami" pull --ff-only
+  mkdir -p "$(dirname "$TARGET")"
+  git clone "$REPO" "$TARGET"
 fi
 
-if [ ! -d "$VENDOR/codex-skill/.git" ]; then
-  git clone https://github.com/c0ng-web/codex-skill.git "$VENDOR/codex-skill"
-else
-  git -C "$VENDOR/codex-skill" pull --ff-only
-fi
-
-echo "Upstreams available under $VENDOR"
-echo "Kami skill: $VENDOR/Kami"
-echo "diagram-maker: $VENDOR/codex-skill/skills/diagram-maker"
+ echo ""
+ echo "Installation complete:"
+ echo "$TARGET"
+ echo ""
+ echo "Available skills:"
+ echo "- visual-router"
+ echo "- document-compression"
+ echo "- artifact-cache"
+ echo "- project-memory-bridge"
+ echo ""
+ echo "Restart your agent environment to reload skills."
