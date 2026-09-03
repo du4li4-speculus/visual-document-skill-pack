@@ -4,26 +4,27 @@ A thin orchestration pack for producing professional, visually distinctive PDF/H
 
 ## Architecture
 
-The pack separates input understanding from output production.
+The pack separates input understanding, reusable asset management, and output production.
 
 ```
-                 visual-router
-                      |
-        --------------------------------
-        |                              |
- input processing              output production
-        |                              |
- document-compression      Kami / diagram-maker / Gamma
+                         visual-router
+                              |
+          ------------------------------------------
+          |                    |                   |
+ input processing       asset management     output production
+          |                    |                   |
+ document-compression   artifact-cache     Kami / diagram-maker / Gamma
 ```
 
 ## Skills
 
 1. **visual-router** — top-level routing layer for visual inputs and outputs.
 2. **document-compression** — reduces vision token usage by converting PDFs/images/Pages into structured reusable context.
-3. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
-4. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
-5. **Host image generation** — optional, for a small number of photos/illustrations.
-6. **Gamma** — optional external app for presentation/web-card output.
+3. **artifact-cache** — lightweight convention for storing and reusing extracted visual assets across workflows.
+4. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
+5. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
+6. **Host image generation** — optional, for a small number of photos/illustrations.
+7. **Gamma** — optional external app for presentation/web-card output.
 
 ## Design principle
 
@@ -31,10 +32,23 @@ Do not merge capabilities into one monolith.
 
 Keep each skill independently updateable and let routing layers coordinate workflows.
 
+The intended flow is:
+
+```
+raw visual input
+      ↓
+document-compression
+      ↓
+artifact-cache
+      ↓
+analysis / production agents
+```
+
 ## Repository layout
 
 - `skills/visual-router/SKILL.md` — orchestration rules.
 - `skills/document-compression/SKILL.md` — document/image compression workflow.
+- `skills/artifact-cache/SKILL.md` — reusable asset conventions.
 - `upstream/manifest.json` — upstream sources and intended install strategy.
 - `AGENTS.md` — guidance for agents working in this repository.
 
@@ -43,6 +57,7 @@ Keep each skill independently updateable and let routing layers coordinate workf
 ### Input
 
 - Large PDF/image/Page collections → **document-compression first**
+- Reused or cross-project assets → **artifact-cache**
 - Small screenshots or quick inspection → direct visual reasoning
 
 ### Output
