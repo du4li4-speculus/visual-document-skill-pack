@@ -1,0 +1,80 @@
+# Visual Document Skill Pack Agent Manifest
+# Universal discovery file for Codex, ChatGPT Agents, and compatible runtimes
+
+name: visual-document-skill-pack
+version: 0.4
+purpose: >-
+  Provide a lightweight orchestration layer for visual document understanding,
+  asset reuse, and production workflows.
+
+entrypoint:
+  skill: visual-router
+  description: >-
+    Always classify visual-document tasks before selecting processing or
+    production workflows.
+
+skills:
+  - name: visual-router
+    role: router
+    priority: 1
+    triggers:
+      - pdf request
+      - image request
+      - pages or slides request
+      - visual artifact creation
+    behavior:
+      - classify input
+      - decide whether compression is needed
+      - select output workflow
+
+  - name: document-compression
+    role: input-processing
+    triggers:
+      - many images
+      - long pdf
+      - scanned document
+      - repeated document analysis
+      - pages with mixed content
+    behavior:
+      - extract structure first
+      - reduce vision usage
+      - create reusable context
+
+  - name: artifact-cache
+    role: asset-management
+    triggers:
+      - reusable extracted assets
+      - cross-workflow documents
+    behavior:
+      - preserve source references
+      - store summaries and indexes
+      - avoid duplicate processing
+
+  - name: project-memory-bridge
+    role: discovery
+    triggers:
+      - project reuse
+      - multi-agent workflows
+    behavior:
+      - connect projects with available assets
+      - provide discoverability
+
+outputs:
+  document:
+    preferred: Kami
+  diagram:
+    preferred: diagram-maker
+  presentation:
+    preferred: Gamma
+  illustration:
+    preferred: host image generation
+
+rules:
+  - Do not process every image with vision.
+  - Do not invoke visual tooling for ordinary chat.
+  - Prefer summaries and structured assets before raw files.
+  - Keep skills independent and composable.
+
+install:
+  bootstrap: scripts/bootstrap.sh
+  verify: scripts/verify.sh
