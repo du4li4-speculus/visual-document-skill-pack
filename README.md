@@ -4,16 +4,22 @@ A thin orchestration pack for producing professional, visually distinctive PDF/H
 
 ## Architecture
 
-The pack separates input understanding, reusable asset management, and output production.
+The pack separates input understanding, reusable asset management, project discovery, and output production.
 
 ```
-                         visual-router
-                              |
-          ------------------------------------------
-          |                    |                   |
+                              visual-router
+                                   |
+        ------------------------------------------------------
+        |                    |                     |
  input processing       asset management     output production
-          |                    |                   |
- document-compression   artifact-cache     Kami / diagram-maker / Gamma
+        |                    |                     |
+ document-compression   artifact-cache      Kami / diagram-maker / Gamma
+                              |
+                              |
+                    project-memory-bridge
+                              |
+                              |
+                    project-specific agents
 ```
 
 ## Skills
@@ -21,10 +27,11 @@ The pack separates input understanding, reusable asset management, and output pr
 1. **visual-router** — top-level routing layer for visual inputs and outputs.
 2. **document-compression** — reduces vision token usage by converting PDFs/images/Pages into structured reusable context.
 3. **artifact-cache** — lightweight convention for storing and reusing extracted visual assets across workflows.
-4. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
-5. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
-6. **Host image generation** — optional, for a small number of photos/illustrations.
-7. **Gamma** — optional external app for presentation/web-card output.
+4. **project-memory-bridge** — discovery layer connecting reusable assets with project agents.
+5. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
+6. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
+7. **Host image generation** — optional, for a small number of photos/illustrations.
+8. **Gamma** — optional external app for presentation/web-card output.
 
 ## Design principle
 
@@ -41,6 +48,8 @@ document-compression
       ↓
 artifact-cache
       ↓
+project-memory-bridge
+      ↓
 analysis / production agents
 ```
 
@@ -49,6 +58,7 @@ analysis / production agents
 - `skills/visual-router/SKILL.md` — orchestration rules.
 - `skills/document-compression/SKILL.md` — document/image compression workflow.
 - `skills/artifact-cache/SKILL.md` — reusable asset conventions.
+- `skills/project-memory-bridge/SKILL.md` — project discovery and routing rules.
 - `upstream/manifest.json` — upstream sources and intended install strategy.
 - `AGENTS.md` — guidance for agents working in this repository.
 
@@ -58,6 +68,7 @@ analysis / production agents
 
 - Large PDF/image/Page collections → **document-compression first**
 - Reused or cross-project assets → **artifact-cache**
+- Cross-project discovery → **project-memory-bridge**
 - Small screenshots or quick inspection → direct visual reasoning
 
 ### Output
