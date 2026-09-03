@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Knowledge Object",
+  "description": "Reusable subject knowledge unit for teaching and curriculum design",
+  "type": "object",
+  "properties": {
+    "concept": {"type": "string"},
+    "domain": {"type": "string"},
+    "core_skill": {"type": "string"},
+    "student_failure_modes": {"type": "array"},
+    "teaching_strategy": {
+      "type": "object",
+      "properties": {
+        "explanation": {"type": "string"},
+        "exercise": {"type": "string"},
+        "assessment": {"type": "string"}
+      }
+    }
+  },
+  "required": ["concept", "domain"]
+}
