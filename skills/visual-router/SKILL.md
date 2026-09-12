@@ -1,146 +1,37 @@
 ---
 name: visual-router
-description: Route visual-document tasks by first classifying inputs, deciding whether compression is needed, and selecting the smallest production workflow across document-compression, Kami, diagram-maker, host image generation, and Gamma.
+description: Route visual-document work when a task needs input triage or selection among available document, diagram, presentation, and image-production capabilities.
 ---
 
-# Visual Router v0.2
+# Visual Router
 
-Use this skill as the top-level visual document orchestration layer.
+Choose the smallest available workflow that satisfies the requested output.
 
-It manages both:
+## Input triage
 
-1. Visual input routing.
-2. Visual output production routing.
+Use **document-compression** when a source is too large for efficient direct inspection, or when structured extraction will be reused across runs. Page and image counts are signals, not automatic triggers.
 
-It does not replace specialized skills.
+Handle a screenshot, one-page document, targeted lookup, or other bounded inspection directly.
 
-## Core Rule
+When compression is used, the flow is one-way:
 
-Choose the smallest workflow that satisfies the task.
+`visual-router → document-compression → returned compact representation → production`
 
-Do not process every visual input deeply. Do not invoke every visual tool.
+Document Compression returns to this caller and does not invoke Visual Router.
 
----
+## Production routing
 
-# Stage 1: Input Triage
+Select an available capability based on the requested artifact:
 
-Before production decisions, inspect the input.
+- Document or PDF production for reports, white papers, one-pagers, and typography-led documents.
+- Diagram production for architecture, topology, process, capability, or lifecycle views.
+- Presentation production for slide-first or card-based storytelling.
+- Image generation when imagery carries information or clear editorial value.
 
-## Large or reusable visual input
+Named tools are optional preferences. Do not search for, install, or wait for a preferred tool when an available equivalent can complete the task.
 
-Route to **document-compression** first when:
+For a report that needs a diagram, create a separate diagram only when it materially improves comprehension; otherwise use native document charts or layout.
 
-- More than 5 images are provided.
-- PDF exceeds roughly 10 pages.
-- Pages/slides contain mixed text, images, charts, or tables.
-- User requests comparison, database creation, tracking, or repeated analysis.
-- The same source is referenced multiple times.
+## Validation
 
-Purpose:
-
-`raw visual input → structured context → targeted analysis`
-
-## Small visual input
-
-Do not compress when:
-
-- Single screenshot.
-- One-page document.
-- Quick inspection.
-
-Use direct visual reasoning.
-
----
-
-# Stage 2: Production Routing
-
-After input is understood, choose output workflow.
-
-## Professional PDF / HTML document
-
-Use **Kami** for:
-
-- reports
-- white papers
-- one-pagers
-- portfolios
-- polished HTML
-- typography-led documents
-
-Kami owns hierarchy, typography, composition, spacing, production, and final visual QA.
-
-## Diagram or architecture
-
-Use **diagram-maker** for:
-
-- software architecture
-- system topology
-- process flow
-- product workflow
-- capability models
-- concept maps
-- lifecycles
-- editable whiteboards
-
-Prefer:
-
-- architecture-svg for systems.
-- clean-svg for polished concepts/processes.
-- excalidraw when editability matters.
-
-## Combined report + diagram
-
-Workflow:
-
-1. Extract the message the diagram must communicate.
-2. Create the diagram with diagram-maker.
-3. Verify hierarchy, labels, arrows, and density.
-4. Embed into Kami.
-5. Let Kami control final composition.
-
-## Images
-
-Use host-native image generation only when images materially improve the artifact:
-
-- cover hero
-- editorial illustration
-- concept illustration
-- section visual
-
-Prefer information design over decorative images.
-
-## Gamma
-
-Use Gamma for:
-
-- card-based storytelling
-- dynamic web-style documents
-- rapid presentation generation
-- explicit request for Gamma style
-
-Gamma remains external.
-
----
-
-# Stage 3: QA Contract
-
-Before delivery verify:
-
-- information hierarchy
-- visual density
-- overflow/clipping
-- diagram readability
-- image necessity
-- PDF/HTML correctness
-
----
-
-# Anti-patterns
-
-Avoid:
-
-- sending large document collections directly into vision models
-- using OCR/compression when unnecessary
-- using image generation instead of information design
-- forcing every artifact through the same visual style
-- combining unrelated visual systems
+Check only properties relevant to the emitted artifact, such as hierarchy, readability, clipping, and file correctness. Render or run broader visual QA when layout is material to the request.
