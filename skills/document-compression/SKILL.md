@@ -1,120 +1,34 @@
 ---
 name: document-compression
-description: Reduce vision token usage when handling large PDFs, images, Pages, and mixed documents by extracting structure first and creating reusable compressed representations. Activate for document collections, repeated references, or long-form visual analysis.
+description: Create a compact, structured representation of a large or reusable visual document when direct inspection would be inefficient.
 ---
 
-# Document Compression Skill
+# Document Compression
 
-## Purpose
+Convert expensive visual inputs into the smallest structured representation needed by the caller.
 
-Convert expensive visual inputs into lightweight structured assets before deep analysis.
+## When to use
 
-The goal is not OCR alone. The goal is:
+Use this skill when:
 
-`visual input → extracted structure → compressed context → targeted retrieval`
+- the relevant material cannot be inspected efficiently in one pass;
+- the user requests comparison, tracking, indexing, or reuse;
+- mixed layouts require preserving relationships among text, tables, charts, and images.
 
-## Activation Rules
+Do not use it for a bounded one-off inspection when direct extraction or vision is sufficient. Counts such as five images or ten pages are triage signals, not automatic requirements.
 
-Activate when any of the following happens:
+## Workflow
 
-- More than 5 images are uploaded.
-- A PDF has more than 10 pages.
-- The user says they will reuse, compare, track, or build a database from files.
-- The same document is referenced multiple times in a conversation.
-- The input contains mixed layouts: pages, screenshots, tables, charts, or embedded images.
+1. Classify the source as text, scan, image collection, slides, or mixed document.
+2. Prefer direct text extraction when it preserves the needed evidence.
+3. Preserve page locations, headings, tables, image references, and material visual relationships.
+4. Return a compact representation to the calling workflow.
+5. Inspect original pages only when visual verification is needed.
 
-Do NOT activate for:
+For a one-off task, create only the transient representation needed downstream.
 
-- A single screenshot.
-- A short PDF requiring only one answer.
-- Simple translation or quick visual inspection.
+Create a reusable bundle such as `content.md`, `structure.json`, `metadata.json`, and `SUMMARY.md` only when reuse, comparison, indexing, or archival is requested or clearly expected. Keep source references and do not replace the original.
 
-## Core Workflow
+## Integration boundary
 
-### 1. Triage
-
-Classify input:
-
-- Text PDF → extract text directly.
-- Scanned PDF → OCR required.
-- Images → OCR plus visual description only when needed.
-- Pages/slides/mixed documents → preserve element relationships.
-
-Avoid full vision processing when text extraction is sufficient.
-
-### 2. Extract
-
-Create intermediate representations:
-
-```
-processed/
-├── content.md
-├── structure.json
-└── metadata.json
-```
-
-Preserve:
-
-- page number
-- headings
-- tables
-- image references
-- important visual relationships
-
-### 3. Compress
-
-Create a summary index:
-
-```
-SUMMARY.md
-```
-
-Include:
-
-- document purpose
-- available sections
-- important pages
-- reusable facts
-- unresolved areas
-
-Do not replace the original document. Create a navigation layer.
-
-### 4. Retrieve Selectively
-
-Future analysis should use:
-
-1. SUMMARY.md first.
-2. Relevant extracted chunks second.
-3. Original images/pages only when visual verification is needed.
-
-## Output Schema
-
-For long-lived projects prefer:
-
-```json
-{
-  "source": "document name",
-  "type": "pdf|image|pages|slides",
-  "sections": [],
-  "key_entities": [],
-  "references": [],
-  "visual_elements": []
-}
-```
-
-## Integration
-
-This skill is an infrastructure layer for visual-document workflows.
-
-Recommended routing:
-
-Document Compression → Visual Router → Kami / diagram-maker / Gamma
-
-It should not replace:
-
-- document styling
-- PDF generation
-- presentation design
-- OCR engines
-
-Keep the skill lightweight. Prefer orchestration over implementation.
+This skill is called by Visual Router or a project workflow and returns its result to that caller. It does not invoke Visual Router or select a production tool.
