@@ -1,99 +1,24 @@
 ---
 name: artifact-cache
-description: Define a lightweight storage and reuse convention for structured assets produced by document-compression and consumed by visual-document workflows.
+description: Persist extracted visual-document assets when the user requests reuse or the same source will be used across multiple runs.
 ---
 
-# Artifact Cache Skill
+# Artifact Cache
 
-## Purpose
+Store reusable document intelligence without creating a database or general memory system.
 
-Provide a shared structure for reusable document intelligence assets.
+Do not create a cache for a one-off task. Register an asset only when reuse, comparison, indexing, or archival is requested or clearly expected.
 
-The artifact cache is not a database and does not replace project storage systems.
+## Minimal record
 
-It creates a stable handoff layer between:
+Keep only what downstream work needs:
 
-raw inputs → compressed context → downstream agents
+- source reference and type;
+- creation date and originating project;
+- extraction method;
+- confidence or verification status;
+- location of the compact representation.
 
-## Core Principle
+Reuse an existing verified representation before extracting the same source again. Load index metadata and summaries before raw files, and return to the original only for verification.
 
-Do not repeatedly process the same visual source.
-
-Once a document has been converted into structured assets, future workflows should reuse those assets.
-
-## Recommended Structure
-
-```
-.artifacts/
-
-├── raw/
-│   Original files or references.
-│
-├── extracted/
-│   Text extraction, OCR output, structured page data.
-│
-├── summaries/
-│   Human-readable navigation files.
-│
-├── schemas/
-│   JSON structures describing reusable entities.
-│
-└── indexes/
-    Cross-project lookup information.
-```
-
-## Asset Lifecycle
-
-```
-Input
- ↓
-Document Compression
- ↓
-Artifact Cache
- ↓
-Analysis Agent
- ↓
-Production Agent
-```
-
-## Required Metadata
-
-Reusable assets should record:
-
-- source name
-- source type
-- creation date
-- originating project
-- extraction method
-- confidence or verification status
-
-Example:
-
-```json
-{
-  "source": "school_curriculum.pdf",
-  "type": "pdf",
-  "project": "AP research",
-  "status": "verified"
-}
-```
-
-## Retrieval Rules
-
-Prefer:
-
-1. index metadata
-2. summary files
-3. extracted chunks
-4. original visual files only when verification is needed
-
-## Anti-patterns
-
-Avoid:
-
-- storing only summaries without source references
-- duplicating the same extracted document in multiple projects
-- creating heavy database infrastructure too early
-- treating cache as permanent memory
-
-The artifact cache is a lightweight bridge, not a full knowledge graph.
+A project may use a lightweight `.artifacts/` structure, but create only the directories required by actual assets.
