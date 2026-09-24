@@ -85,5 +85,7 @@ Ordinary chat answers should not invoke visual-document tooling.
 
 - Kami: https://github.com/tw93/Kami
 - diagram-maker: https://github.com/c0ng-web/codex-skill/tree/main/skills/diagram-maker
+- Impeccable: https://github.com/pbakaus/impeccable
+- Agentic Mermaid: https://github.com/adewale/agentic-mermaid
 
 This pack does not vendor third-party source by default. It keeps orchestration separate so upstream licenses and updates remain clear.
