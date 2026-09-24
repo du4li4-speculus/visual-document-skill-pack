@@ -28,8 +28,9 @@
       "install": "npx impeccable install",
       "update": "npx impeccable update",
       "source_ref": "main@e0881d2de397d5e9761d7b35ff5017d8f5ebf69b",
-      "installed_skill_version": "0.1.5",
-      "installed_engine_version": "4.0.0",
+      "installed_skill_version": "4.3.1",
+      "installed_cli_version": "4.0.0",
+      "installed_engine_version": "0.1.5",
       "install_location": "$CODEX_HOME/skills/impeccable",
       "install_fallback": "GitHub skill path install; official universal bundle endpoint failed DNS resolution"
     },

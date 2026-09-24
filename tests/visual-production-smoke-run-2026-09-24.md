@@ -13,7 +13,7 @@ The report-only and report-plus-diagram PDFs were temporary QA outputs. Each ren
 | visual-router / pdf-design-critic | Pack 0.2.0 | `du4li4-speculus/visual-document-skill-pack` main at `dc68e97b6e33cf18ec99d40eab03014ad0ea58a0` |
 | Kami | Skill 1.16.0; WeasyPrint 70.0 | `tw93/Kami` main at `a489e39633d1d6a044047bc9bf4452f7a65bb00a` |
 | diagram-maker | Upstream skill; no version file declared | `c0ng-web/codex-skill` main at `52f81a368473c15aa4df4ad50aa6c5539d58b94c` |
-| Impeccable | Skill 0.1.5; engine 4.0.0 | `pbakaus/impeccable` main at `e0881d2de397d5e9761d7b35ff5017d8f5ebf69b` |
+| Impeccable | Skill 4.3.1; CLI 4.0.0; engine 0.1.5 | `pbakaus/impeccable` main at `e0881d2de397d5e9761d7b35ff5017d8f5ebf69b` |
 | Agentic Mermaid | npm package 0.4.1; Node 24.19.0 | `adewale/agentic-mermaid` main at `d60f8658b1a769391b5d201382b5db6147028ef6` |
 
 Each installed skill's `SKILL.md` blob matched the corresponding upstream GitHub file at the recorded source revision.
