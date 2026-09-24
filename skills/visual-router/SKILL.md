@@ -1,6 +1,6 @@
 ---
 name: visual-router
-description: Route visual-document work when a task needs input triage or selection among available document, diagram, presentation, and image-production capabilities.
+description: Route visual-document work when a task needs input triage or selection among available document, diagram, product-UI, presentation, and image-production capabilities.
 ---
 
 # Visual Router
@@ -21,17 +21,18 @@ Document Compression returns to this caller and does not invoke Visual Router.
 
 ## Production routing
 
-Select an available capability based on the requested artifact:
-
-- Document or PDF production for reports, white papers, one-pagers, and typography-led documents.
-- Diagram production for architecture, topology, process, capability, or lifecycle views.
-- Presentation production for slide-first or card-based storytelling.
-- Image generation when imagery carries information or clear editorial value.
-
-Named tools are optional preferences. Do not search for, install, or wait for a preferred tool when an available equivalent can complete the task.
+- Professional PDF / report / white paper / one-pager / typography-led HTML → **Kami**.
+- Architecture / topology / workflow / lifecycle → prefer **Agentic Mermaid** when deterministic Mermaid, styled SVG/PNG, or verified structured edits are useful; use **diagram-maker** for free-form SVG, architecture-svg, concept maps, or editable Excalidraw.
+- Product UI / dashboard / web app / frontend surface → **Impeccable** for design direction, critique, deterministic detection, and bounded polish.
+- Slide-first / card-based visual storytelling → **Gamma**.
+- Image generation → only when imagery carries information or clear editorial value.
 
 For a report that needs a diagram, create a separate diagram only when it materially improves comprehension; otherwise use native document charts or layout.
 
+## PDF quality gate
+
+For serious PDF/report output, run **pdf-design-critic** after composition and before delivery. Treat it as QA, not as a renderer. It checks hierarchy, information density, whitespace, typography, tables/charts, captions, page rhythm, clipping, and final-size readability.
+
 ## Validation
 
-Check only properties relevant to the emitted artifact, such as hierarchy, readability, clipping, and file correctness. Render or run broader visual QA when layout is material to the request.
+Check only properties relevant to the emitted artifact. Prefer bounded QA: one complete inspection, one concentrated repair pass, then one confirmation pass. Avoid endless aesthetic iteration.
