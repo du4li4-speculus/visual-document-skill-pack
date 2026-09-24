@@ -5,34 +5,63 @@
     {
       "name": "kami",
       "repository": "https://github.com/tw93/Kami",
-      "strategy": "keep upstream separate; install from official project/package when supported"
+      "strategy": "keep upstream separate; install from official project/package when supported",
+      "source_ref": "main@a489e39633d1d6a044047bc9bf4452f7a65bb00a",
+      "installed_version": "1.16.0",
+      "install_location": "$CODEX_HOME/skills/kami",
+      "pdf_renderer": "WeasyPrint 70.0 in $CODEX_HOME/kami-runtime"
     },
     {
       "name": "diagram-maker",
       "repository": "https://github.com/c0ng-web/codex-skill",
       "path": "skills/diagram-maker",
-      "strategy": "keep upstream separate; copy/install the skill directory when supported"
+      "strategy": "keep upstream separate; copy/install the skill directory when supported",
+      "source_ref": "main@52f81a368473c15aa4df4ad50aa6c5539d58b94c",
+      "installed_version": null,
+      "install_location": "$CODEX_HOME/skills/diagram-maker",
+      "version_note": "No version file declared by upstream skill"
     },
     {
       "name": "impeccable",
       "repository": "https://github.com/pbakaus/impeccable",
       "strategy": "upstream-managed; install/update with the official installer; do not vendor by default",
       "install": "npx impeccable install",
-      "update": "npx impeccable update"
+      "update": "npx impeccable update",
+      "source_ref": "main@e0881d2de397d5e9761d7b35ff5017d8f5ebf69b",
+      "installed_skill_version": "0.1.5",
+      "installed_engine_version": "4.0.0",
+      "install_location": "$CODEX_HOME/skills/impeccable",
+      "install_fallback": "GitHub skill path install; official universal bundle endpoint failed DNS resolution"
     },
     {
       "name": "agentic-mermaid",
       "repository": "https://github.com/adewale/agentic-mermaid",
       "path": "skills/agentic-mermaid-diagram-workflow",
       "strategy": "upstream-managed; use for deterministic styled Mermaid and verified diagram editing",
-      "runtime": "npm install agentic-mermaid"
+      "runtime": "npm install agentic-mermaid",
+      "source_ref": "main@d60f8658b1a769391b5d201382b5db6147028ef6",
+      "installed_package_version": "0.4.1",
+      "node_version": "24.19.0",
+      "runtime_install": "npm install --prefix $CODEX_HOME/agentic-mermaid-runtime agentic-mermaid",
+      "cli": "$CODEX_HOME/agentic-mermaid-runtime/node_modules/.bin/am"
     }
   ],
   "local_skills": [
     {
+      "name": "visual-router",
+      "path": "skills/visual-router",
+      "role": "top-level task and output router",
+      "installed": true,
+      "pack_version": "0.2.0",
+      "source_ref": "main@dc68e97b6e33cf18ec99d40eab03014ad0ea58a0"
+    },
+    {
       "name": "pdf-design-critic",
       "path": "skills/pdf-design-critic",
-      "role": "post-composition design QA for PDF/report artifacts"
+      "role": "post-composition PDF quality gate",
+      "installed": true,
+      "pack_version": "0.2.0",
+      "source_ref": "main@dc68e97b6e33cf18ec99d40eab03014ad0ea58a0"
     }
   ],
   "external_apps": [
@@ -41,5 +70,8 @@
       "role": "optional alternate document/presentation/web production route",
       "vendored": false
     }
-  ]
+  ],
+  "verified_at": "2026-09-24",
+  "verification_record": "tests/visual-production-smoke-run-2026-09-24.md",
+  "install_target": "Codex Agent user skills"
 }

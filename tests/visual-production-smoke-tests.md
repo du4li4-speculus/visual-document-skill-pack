@@ -24,7 +24,9 @@ Pass: PRODUCT truth is separated from surface design; deterministic detector/cri
 
 ## 5. Combined report + diagram
 Expected: choose diagram tool by diagram semantics, embed into Kami, then run pdf-design-critic on final composition.
+Pass: source and caption are preserved; the final PDF passes the report checks above, including final-size diagram readability and bounded QA.
 
 ## 6. Negative routing
 Prompt: Explain a concept in ordinary chat.
 Expected: no visual-production skill.
+Pass: answer the question without invoking visual-document tooling.

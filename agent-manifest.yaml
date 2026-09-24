@@ -10,7 +10,7 @@ purpose: >-
 entrypoint:
   skill: visual-router
   description: >-
-    Always classify visual-document tasks before selecting processing or
+    Classify visual-document tasks before selecting input processing or output
     production workflows.
 
 skills:
@@ -23,9 +23,9 @@ skills:
       - pages or slides request
       - visual artifact creation
     behavior:
-      - classify input
-      - decide whether compression is needed
-      - select output workflow
+      - classify the input
+      - decide whether document-compression is needed
+      - route to an available output capability
 
   - name: document-compression
     role: input-processing
@@ -37,8 +37,8 @@ skills:
       - pages with mixed content
     behavior:
       - extract structure first
-      - reduce vision usage
-      - create reusable context
+      - preserve source references
+      - return compact evidence for production
 
   - name: artifact-cache
     role: asset-management
@@ -47,7 +47,6 @@ skills:
       - cross-workflow documents
     behavior:
       - preserve source references
-      - store summaries and indexes
       - avoid duplicate processing
 
   - name: project-memory-bridge
@@ -59,11 +58,70 @@ skills:
       - connect projects with available assets
       - provide discoverability
 
+  - name: kami
+    role: document-production
+    triggers:
+      - professional pdf or report
+      - white paper or one-pager
+      - composed html document
+    behavior:
+      - use the closest supported document workflow
+      - verify page count and final rendering
+
+  - name: pdf-design-critic
+    role: pdf-quality-gate
+    triggers:
+      - final pdf or report before delivery
+    behavior:
+      - inspect hierarchy, density, whitespace, typography, tables, page rhythm, clipping, and final-size readability
+      - use one bounded repair and one confirmation pass
+
+  - name: agentic-mermaid
+    role: formal-diagram
+    triggers:
+      - architecture or topology diagram
+      - workflow or lifecycle diagram
+      - deterministic mermaid rendering or verified edits
+    behavior:
+      - preserve deterministic Mermaid source
+      - verify nodes, labels, edges, and warnings before delivery
+
+  - name: diagram-maker
+    role: editable-diagram
+    triggers:
+      - free-form concept map
+      - editable whiteboard
+      - Excalidraw or architecture SVG
+    behavior:
+      - select SVG/HTML or Excalidraw based on editability needs
+      - keep groups and connectors legible
+
+  - name: impeccable
+    role: product-ui-design
+    triggers:
+      - dashboard or frontend surface
+      - product ui critique or polish
+    behavior:
+      - keep PRODUCT.md separate from DESIGN.md
+      - use deterministic detection when available
+      - apply bounded repair
+
+  - name: Gamma
+    role: presentation-production
+    optional: true
+    triggers:
+      - slide-first visual storytelling
+      - card-based presentation or web aesthetic
+
 outputs:
   document:
     preferred: Kami
+    quality_gate: pdf-design-critic
   diagram:
-    preferred: diagram-maker
+    formal: Agentic Mermaid
+    freeform_or_editable: diagram-maker
+  product_ui:
+    preferred: Impeccable
   presentation:
     preferred: Gamma
   illustration:
@@ -72,7 +130,8 @@ outputs:
 rules:
   - Do not process every image with vision.
   - Do not invoke visual tooling for ordinary chat.
-  - Prefer summaries and structured assets before raw files.
+  - Preserve source references when extracting evidence.
+  - Keep product truth separate from surface design direction.
   - Keep skills independent and composable.
 
 install:

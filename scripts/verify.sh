@@ -13,6 +13,7 @@ FILES=(
   "skills/document-compression/SKILL.md"
   "skills/artifact-cache/SKILL.md"
   "skills/project-memory-bridge/SKILL.md"
+  "skills/pdf-design-critic/SKILL.md"
 )
 
 for FILE in "${FILES[@]}"; do

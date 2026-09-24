@@ -1,56 +1,69 @@
 # Visual Document Skill Pack
 
-A thin orchestration pack for producing professional, visually distinctive PDF/HTML deliverables and efficiently managing visual document inputs.
+A thin orchestration pack for producing professional PDF/HTML deliverables and managing reusable visual knowledge assets.
 
 ## Architecture
 
-The pack separates input understanding, reusable asset management, project discovery, and output production.
+The pack separates input understanding, reusable assets, project discovery, and output production.
 
-```
-                              visual-router
-                                   |
-        ------------------------------------------------------
-        |                    |                     |
- input processing       asset management     output production
-        |                    |                     |
- document-compression   artifact-cache      Kami / diagram-maker / Gamma
-                              |
-                              |
-                    project-memory-bridge
-                              |
-                              |
-                    project-specific agents
+```mermaid
+flowchart TB
+  Raw["Raw visual input"] --> Router["visual-router"]
+  Router --> Compression["document-compression"]
+  Router --> Assets["artifact-cache"]
+  Assets --> Bridge["project-memory-bridge"]
+  Bridge --> Agents["Project-specific agents"]
+  Router --> Production["Output routing"]
+  Production --> Docs["Kami"]
+  Docs --> Critic["pdf-design-critic"]
+  Production --> Diagrams["Agentic Mermaid or diagram-maker"]
+  Production --> UI["Impeccable"]
+  Production --> Slides["Gamma"]
 ```
 
 ## Skills
 
-1. **visual-router** — top-level routing layer for visual inputs and outputs.
-2. **document-compression** — reduces vision token usage by converting PDFs/images/Pages into structured reusable context.
-3. **artifact-cache** — lightweight convention for storing and reusing extracted visual assets across workflows.
-4. **project-memory-bridge** — discovery layer connecting reusable assets with project agents.
-5. **Kami** — document art direction, typography, page composition, PDF/HTML delivery.
-6. **diagram-maker** — architecture diagrams, process diagrams, concept maps, and Excalidraw.
-7. **Host image generation** — optional, for a small number of photos/illustrations.
-8. **Gamma** — optional external app for presentation/web-card output.
+| Skill | Role |
+|---|---|
+| **visual-router** | Classifies visual-document work and selects the smallest suitable workflow. |
+| **document-compression** | Structures long PDFs, scans, and image collections for reliable reuse. |
+| **artifact-cache** | Stores reusable extracted assets with source references. |
+| **project-memory-bridge** | Connects reusable assets to project-specific agents. |
+| **Kami** | Produces composed documents and PDFs. |
+| **pdf-design-critic** | Reviews the final PDF after composition. |
+| **Agentic Mermaid** | Creates and verifies deterministic Mermaid diagrams. |
+| **diagram-maker** | Creates free-form SVG/HTML and editable Excalidraw diagrams. |
+| **Impeccable** | Guides product UI design, critique, deterministic detection, and bounded repair. |
+| **Host image generation** | Optional source for a small number of editorial images. |
+| **Gamma** | Optional production route for slide-first or card-based output. |
+
+## Routing
+
+### Input
+
+- Large PDF/image/Page collections or repeated document analysis → **document-compression**.
+- Reused assets → **artifact-cache**.
+- Cross-project discovery → **project-memory-bridge**.
+- A bounded screenshot, short document, or targeted lookup → direct inspection.
+
+### Output
+
+- Professional PDF/report/white paper/one-pager → **Kami**, then **pdf-design-critic** for substantial deliverables.
+- Formal architecture, workflow, topology, or lifecycle diagram → **Agentic Mermaid** when deterministic Mermaid output and structural verification are useful.
+- Free-form concept map, architecture SVG, or editable whiteboard → **diagram-maker / Excalidraw**.
+- Product UI/dashboard/frontend → **Impeccable**. Keep durable product truth in `PRODUCT.md` separate from surface direction in `DESIGN.md`.
+- Report containing a diagram → choose the diagram tool by semantics, embed it in **Kami**, then run **pdf-design-critic** on the final composition.
+- Slide-first visual storytelling → **Gamma**.
+- Ordinary chat answers should not invoke visual-document tooling.
 
 ## Design principle
 
-Do not merge capabilities into one monolith.
+Keep capabilities separate and independently updateable. Let the routing layer coordinate them without merging them into one monolith.
 
-Keep each skill independently updateable and let routing layers coordinate workflows.
-
-The intended flow is:
+The input-asset flow is:
 
 ```
-raw visual input
-      ↓
-document-compression
-      ↓
-artifact-cache
-      ↓
-project-memory-bridge
-      ↓
-analysis / production agents
+raw visual input → document-compression → artifact-cache → project-memory-bridge → analysis / production agents
 ```
 
 ## Repository layout
@@ -59,33 +72,19 @@ analysis / production agents
 - `skills/document-compression/SKILL.md` — document/image compression workflow.
 - `skills/artifact-cache/SKILL.md` — reusable asset conventions.
 - `skills/project-memory-bridge/SKILL.md` — project discovery and routing rules.
-- `upstream/manifest.json` — upstream sources and intended install strategy.
+- `skills/pdf-design-critic/SKILL.md` — final PDF quality review.
+- `upstream/manifest.json` — upstream sources, installed versions, and verification date.
+- `tests/visual-production-smoke-tests.md` — smoke-test scenarios and pass criteria.
+- `tests/visual-production-smoke-run-2026-09-24.md` — latest installation and test record.
 - `AGENTS.md` — guidance for agents working in this repository.
 
-## Recommended routing
-
-### Input
-
-- Large PDF/image/Page collections → **document-compression first**
-- Reused or cross-project assets → **artifact-cache**
-- Cross-project discovery → **project-memory-bridge**
-- Small screenshots or quick inspection → direct visual reasoning
-
-### Output
-
-- Professional PDF / report / one-pager / white paper / polished HTML → **Kami**
-- Architecture / workflow / capability model / system diagram → **diagram-maker**
-- Report containing diagrams → **diagram-maker first**, then embed into **Kami**
-- Small number of editorial photos or illustrations → host-native image generation
-- Dynamic card-based presentation/web aesthetic → **Gamma**
-
-Ordinary chat answers should not invoke visual-document tooling.
+Run `bash scripts/verify.sh` to check the core local skills. See the smoke-test run record for upstream version details and test limitations.
 
 ## Upstream projects
 
-- Kami: https://github.com/tw93/Kami
-- diagram-maker: https://github.com/c0ng-web/codex-skill/tree/main/skills/diagram-maker
-- Impeccable: https://github.com/pbakaus/impeccable
-- Agentic Mermaid: https://github.com/adewale/agentic-mermaid
+- [Kami](https://github.com/tw93/Kami)
+- [diagram-maker](https://github.com/c0ng-web/codex-skill/tree/main/skills/diagram-maker)
+- [Impeccable](https://github.com/pbakaus/impeccable)
+- [Agentic Mermaid](https://github.com/adewale/agentic-mermaid)
 
-This pack does not vendor third-party source by default. It keeps orchestration separate so upstream licenses and updates remain clear.
+Third-party source is not vendored by default. The pack keeps orchestration separate so upstream licenses and updates remain clear.
