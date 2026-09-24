@@ -1,6 +1,6 @@
 {
   "pack": "visual-document-skill-pack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "upstreams": [
     {
       "name": "kami",
@@ -12,6 +12,27 @@
       "repository": "https://github.com/c0ng-web/codex-skill",
       "path": "skills/diagram-maker",
       "strategy": "keep upstream separate; copy/install the skill directory when supported"
+    },
+    {
+      "name": "impeccable",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "strategy": "upstream-managed; install/update with the official installer; do not vendor by default",
+      "install": "npx impeccable install",
+      "update": "npx impeccable update"
+    },
+    {
+      "name": "agentic-mermaid",
+      "repository": "https://github.com/adewale/agentic-mermaid",
+      "path": "skills/agentic-mermaid-diagram-workflow",
+      "strategy": "upstream-managed; use for deterministic styled Mermaid and verified diagram editing",
+      "runtime": "npm install agentic-mermaid"
+    }
+  ],
+  "local_skills": [
+    {
+      "name": "pdf-design-critic",
+      "path": "skills/pdf-design-critic",
+      "role": "post-composition design QA for PDF/report artifacts"
     }
   ],
   "external_apps": [
